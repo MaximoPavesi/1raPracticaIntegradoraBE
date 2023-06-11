@@ -1,16 +1,13 @@
-const { Router } = require("express")
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
+const CONFIG = require('../config');
 
-class ManagerMongo {
-
-    constructor(url) {
-        this.url = "mongodb+srv://machipavesi:machi777@clustercodermongo.6u072tr.mongodb.net/ecommerce"
+module.exports = {
+    connection: null,
+    connect: () => {
+        //if (this.connection) return this.connection;
+        return mongoose.connect(CONFIG.DB, {useUnifiedTopology: true,useNewUrlParser: true}).then(connection => {
+            this.connection = connection;
+            console.log('Conexion a DB exitosa');
+        }).catch(err => console.log(err))
     }
-
-    connectMongoDb = ()=> {
-        return mongoose.connect(this.url,{})
-    }
-
 }
-
-module.exports = ManagerMongo
